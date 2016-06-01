@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+  <head>
+    <meta charset="UTF-8">
+    <title>Football Frontier</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,100,700,900' rel='stylesheet' type='text/css'>
+    <!-- // <script src="js/lib/bootstrap-3.3.6-dist/css/bootstrap.min.css"></script>   -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/lib/angular/angular-route.min.js"></script>
+    <script src="js/lib/angular/angular-animate.min.js"></script>
+    <script src="js/lib/angular/ui-bootstrap.min.js"></script>
+
+    <script src="controller/app.js"></script>
+    <!-- // <script src="controller/services/authentication.js"></script> -->
+    <script src="controller/controller.js"></script>
+    <!-- // <script src="controller/match.js"></script> -->
+  </head>
+  <body>
+    <header>
+      <nav class="cf" ng-include="'views/nav.html'"></nav>
+    </header>
+    
+    <div ng-view></div>
+  </body>
+</html>
