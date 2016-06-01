@@ -9,10 +9,11 @@ myApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpPr
       controller: 'MatchCtrl',
       controllerAs: 'match'
     }).
-    // when('/league', {
-    //   templateUrl: 'pages/leagueDetails.html',
-    //   // controller: 'RegistrationController'zcxv
-    // }).
+    when('/league/:uniqID', {
+      templateUrl: 'pages/leagueDetails.html',
+      controller: 'DetailsCtrl',
+      controllerAs: 'details'
+    }).
     otherwise({
       redirectTo: '/'
     });
