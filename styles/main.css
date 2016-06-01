@@ -140,3 +140,29 @@ body {
   position: relative;
   right: 5em;
 }
+
+.img {
+
+    /*.info {*/
+
+        text-align: -webkit-center;
+    /*}*/
+}
+
+.value {
+
+    position: relative;
+    top: 11em;
+}
+
+.code {
+
+    position: relative;
+    text-align: center;
+    top: 10em;
+}
+
+.well {
+
+    background-color: transparent;
+}

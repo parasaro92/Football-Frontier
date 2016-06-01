@@ -23,7 +23,22 @@ myApp.controller('DetailsCtrl', function($routeParams, $resource, FootballServic
   // var leagueDetailsResource = $resource('http://api.football-data.org/v1/soccerseasons/'+ id +'/teams');
   // vm.league_details = leagueDetailsResource.get();
   // console.log(vm.league_details);
+  // vm.teams = FootballService.getData(myApi);
+  // console.log(vm.teams);
 
+  
+
+  vm.api = FootballService.Api;
+  console.log(vm.api);
+  
+  vm.getTeamData = $resource(vm.api).get();
+  console.log(vm.getTeamData);
+
+  vm.getTeamSquad = $resource(vm.api + '/players').get();
+  console.log(vm.getTeamSquad); 
+
+  vm.getTeamFixtures = $resource(vm.api + '/fixtures').get();
+  console.log(vm.getTeamFixtures);
 });
 
 myApp.controller('TableCtrl', function($routeParams, $resource, FootballService){
@@ -39,6 +54,12 @@ myApp.controller('TableCtrl', function($routeParams, $resource, FootballService)
   console.log(vm.league_table);
   vm.league_details = FootballService.getFixtures($routeParams.uniqID);
   console.log(vm.league_details);
+  // details
+  vm.getApi = function(api){
+    FootballService.Api = api;
+    console.log("api");
+  }
+  // FootballService.api = Api;
 });
 
 
@@ -56,7 +77,7 @@ myApp.service('FootballService', function($resource, $q){
       var len = data.length;
       for(var i=0; i<len; i++){
         ObjLeague = data[i];
-        ObjLeague.caption = ObjLeague.caption.match(/^\d?\.?\s?(.​)\s[0-9\/]*​$/)[1];
+        ObjLeague.caption = ObjLeague.caption.match(/^\d?\.?\s?(.​*)\s[0-9\/]*​$/);
       }
       deferred.resolve(data);
     },function(err) {
@@ -76,4 +97,17 @@ myApp.service('FootballService', function($resource, $q){
     var resObj = $resource('http://api.football-data.org/v1/soccerseasons/:id/leagueTable');
     return resObj.get({id:myid});
   }
+
+  vm.getTeam = function(myid){
+
+    var resObj = $resource('http://api.football-data.org/v1/teams/:id');
+    return resObj.get({id:myid});
+  }
+
+  // vm.getData = function(myApi){
+  //   var resObj = $resource(myApi).get();
+  //   console.log(resObj);
+  // }
+
+  vm.Api = '';
 });

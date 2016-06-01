@@ -1,0 +1,71 @@
+<div class="well well-lg">
+  <div class="row">
+    <!-- <div class="container"> -->
+      <div class="col-md-4 code">
+        <h2>{{details.getTeamData.code}}</h2>
+      </div>
+      <div class="col-md-4">
+        <div class="text-center img">
+          <img class="img-responsive info" ng-src="{{details.getTeamData.crestUrl}}" width="160" height="160"/>
+          <h2>{{details.getTeamData.name}}</h2>
+        <!-- </div> -->
+        </div>
+      </div>
+      <div class="col-md-4 value">
+        <h3> Market Worth: {{details.getTeamData.squadMarketValue}}</h3>
+      </div>
+  </div>
+</div>
+
+<div class ="row">
+  <div class="container">
+    <div class="col-md-8" id="result">
+      <div class="container-fluid slot">
+       <h3>Team Squad</h3>
+      </div>
+      <table class="table table-default">
+        <thead>
+          <tr>
+            <th>Jersey No.</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Nationality</th>
+<!--             <th>D.O.B</th>
+ -->            <th>Contract</th>
+            <th>Market Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat = "n in details.getTeamSquad.players">
+          <!-- <a ng-href="#/fixtures/{{tables.id}}"> -->
+            <th>{{n.jerseyNumber}}</th>
+            <th>{{n.name}}</th>
+            <th>{{n.position}}</th>
+            <th>{{n.nationality}}</th>
+<!--             <th>{{n.dateOfBirth}}<th>
+ -->            <th>{{n.contractUntil}}</th>
+            <th>{{n.marketValue}}</th>
+            <!-- </a> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Fixtures</h3>
+        </div>
+        <div class="panel-body" ng-repeat="n in details.getTeamFixtures.fixtures">
+          <div class="row">
+            <div class="col-md-4">{{n.homeTeamName}}</div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3">{{n.result.goalsHomeTeam}} &mdash; {{n.result.goalsAwayTeam}}</div>
+            <!-- <div class="col-md-2">{{n.result.goalsAwayTeam}}</div> -->
+            <div class="col-md-3">{{n.awayTeamName}}</div>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+

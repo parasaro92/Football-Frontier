@@ -21,7 +21,7 @@
           <!-- <a ng-href="#/fixtures/{{tables.id}}"> -->
             <th>{{n.position}}</th>
             <th><img class="img-responsive" ng-src="{{n.crestURI}}" width="40" height="40"/></th>
-            <th><a ng-href="#/fixtures/">{{n.teamName}}</a></th>
+            <th><a ng-href="#/teams" ng-click="tables.getApi(n._links.team.href)">{{n.teamName}}</a></th>
             <th>{{n.playedGames}}</th>
             <th>{{n.points}}</th>
             <th>{{n.goals}}</th>
