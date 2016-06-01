@@ -2,29 +2,78 @@
 myApp.controller('MatchCtrl', function(FootballService){
 
   var vm = this;
-  vm.match = FootballService.query(function(data){
-  // vm.add = FootballService.name;
-  });
-  console.log(vm.match);
-});
-
-myApp.controller('DetailsCtrl', function($routeParams, $resource){
-
-  // var vm = this;
-  // vm.id = $routeParams.uniqueID;
-  // vm.league_details = FootballService.query(function(data){
+  // vm.match = FootballService.query(function(data){
   // // vm.add = FootballService.name;
   // });
-  // console.log(vm.league_details);
+  // console.log(vm.match);
+  var promiseRsp = FootballService.getLeagues();
+  promiseRsp.then(function(data){
+    console.log(data);
+    vm.matches = data;
+  },function(err){
+    console.log(err);
+  });
+});
+
+myApp.controller('DetailsCtrl', function($routeParams, $resource, FootballService){
+
 
   var vm = this;
-  var id = $routeParams.uniqID;
-  var leagueDetailsResource = $resource('http://api.football-data.org/v1/soccerseasons/'+ id +'/teams');
-  vm.league_details = leagueDetailsResource.get();
+  // var id = $routeParams.uniqID;
+  // var leagueDetailsResource = $resource('http://api.football-data.org/v1/soccerseasons/'+ id +'/teams');
+  // vm.league_details = leagueDetailsResource.get();
+  // console.log(vm.league_details);
+
+});
+
+myApp.controller('TableCtrl', function($routeParams, $resource, FootballService){
+
+
+  var vm = this;
+  // var id = $routeParams.uniqID;
+  // var leagueDetailsResource = $resource('http://api.football-data.org/v1/soccerseasons/'+ id +'/teams');
+  // vm.league_details = leagueDetailsResource.get();
+  // console.log(vm.league_details);
+
+  vm.league_table = FootballService.getLeague($routeParams.uniqID);
+  console.log(vm.league_table);
+  vm.league_details = FootballService.getFixtures($routeParams.uniqID);
   console.log(vm.league_details);
 });
 
 
-myApp.service('FootballService', function($resource){
-  return $resource('http://api.football-data.org/v1/soccerseasons');
+myApp.service('FootballService', function($resource, $q){
+
+  var vm = this; 
+
+  vm.getLeagues = function() {
+    
+    var resObj =  $resource('http://api.football-data.org/v1/soccerseasons');
+    var rsp = resObj.query();
+    var deferred = $q.defer();
+    rsp.$promise.then(function(data){
+      // console.log(data);
+      var len = data.length;
+      for(var i=0; i<len; i++){
+        ObjLeague = data[i];
+        ObjLeague.caption = ObjLeague.caption.match(/^\d?\.?\s?(.​)\s[0-9\/]*​$/)[1];
+      }
+      deferred.resolve(data);
+    },function(err) {
+      deferred.reject(err);
+    });
+    return deferred.promise;
+  }
+
+  vm.getFixtures = function(myid){
+
+    var resObj = $resource('http://api.football-data.org/v1/soccerseasons/:id/fixtures');
+    return resObj.get({id:myid});
+  }
+
+  vm.getLeague = function(myid){
+
+    var resObj = $resource('http://api.football-data.org/v1/soccerseasons/:id/leagueTable');
+    return resObj.get({id:myid});
+  }
 });
