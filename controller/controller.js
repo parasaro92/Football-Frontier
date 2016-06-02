@@ -52,8 +52,14 @@ myApp.controller('TableCtrl', function($routeParams, $resource, FootballService)
 
   vm.league_table = FootballService.getLeague($routeParams.uniqID);
   console.log(vm.league_table);
-  vm.league_details = FootballService.getFixtures($routeParams.uniqID);
-  console.log(vm.league_details);
+  var getFixtures = FootballService.getFixtures($routeParams.uniqID);
+  console.log(vm.getFixtures);
+  getFixtures.then(function(data){
+    vm.league_details = data;
+  },function(){
+
+    console.log('Error while fetching data')
+  })
   // details
   vm.getApi = function(api){
     FootballService.Api = api;
@@ -77,7 +83,7 @@ myApp.service('FootballService', function($resource, $q){
       var len = data.length;
       for(var i=0; i<len; i++){
         ObjLeague = data[i];
-        ObjLeague.caption = ObjLeague.caption.match(/^\d?\.?\s?(.​*)\s[0-9\/]*​$/);
+        // ObjLeague.caption = ObjLeague.caption.match(/^\d?\.?\s?(.​*)\s[0-9\/]*​$/);
       }
       deferred.resolve(data);
     },function(err) {
@@ -89,7 +95,21 @@ myApp.service('FootballService', function($resource, $q){
   vm.getFixtures = function(myid){
 
     var resObj = $resource('http://api.football-data.org/v1/soccerseasons/:id/fixtures');
-    return resObj.get({id:myid});
+    var rsp = resObj.get({id:myid});
+    var deferred = $q.defer();
+    rsp.$promise.then(function(data){
+      console.log(data);
+      var len = data.fixtures.length;
+      console.log(len);
+      data.fixtures = data.fixtures.reverse();
+      for(i=0;i<len;i++){
+        objFixtures = data.fixtures[i];
+      }
+      deferred.resolve(data);
+    },function(err){
+      deferred.reject(err);
+    });
+    return deferred.promise;
   }
 
   vm.getLeague = function(myid){
