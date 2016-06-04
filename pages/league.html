@@ -2,32 +2,6 @@
  <h3>Leagues</h3>
 </div>
 <br>
-<!-- <div class="container">
-  <div class ="row">
-   <div class="col-xs-6 col-md-3" id="result"  ng-repeat = "n in match.match">
-     <div class="well match">
-       <a href="#/league/{{n.id}}">
-
-       League : {{n.league}}
-       <br>
-       Name : {{n.caption}}
-       <br>
-       Year : {{n.year}}
-       <br>
-       Match Day : {{n.currentMatchday}}
-       <br>
-       Match Days : {{n.numberOfMatchdays}}
-       <br>
-       Teams : {{n.numberOfTeams}}
-       <br>
-       Games : {{n.numberOfGames}}
-       <br>
-       Last Update : {{n.lastUpdated}}
-       <br></a>
-     </div>
-   </div>
-  </div>
-</div> -->
 
 <div class="container">
   <div class="col-sm-12" ng-repeat = "n in match.matches">
@@ -50,7 +24,7 @@
              <br>
              Games : {{n.numberOfGames}}
              <br>
-             Last Update : {{n.lastUpdated}}
+             Last Update : {{n.lastUpdated | date:'mediumDate'}}
              <br>
 
           </div>
